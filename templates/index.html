@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avocado Cost Prediction</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        height: 100vh;
+        margin: 0;
+        font-family: "Arial", sans-serif;
+        background-image: url("https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolor-4116932_1280.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      form {
+        max-width: 800px;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        color: #008ae5;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .btn-primary {
+        background-color: #008ae5;
+        border: none;
+        color: #ffffff;
+        font-weight: bold;
+        transition: background-color 0.3s;
+        width: 100%;
+        padding: 10px;
+      }
+      .btn-primary:hover {
+        background-color: #46c9c7;
+      }
+      .note {
+        font-size: 1rem;
+        color: #757575;
+        margin-top: 30px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <form method="POST" action="/predict">
+      <h2>Avocado Cost Prediction</h2>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="date" class="form-label">Date</label>
+          <input
+            type="date"
+            class="form-control"
+            name="date"
+            id="date"
+            required
+            aria-label="Select date for prediction"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="region" class="form-label">Region</label>
+          <select
+            class="form-select"
+            name="region"
+            id="region"
+            required
+            aria-label="Select avocado region"
+          >
+            <option selected disabled>Select Region</option>
+            <option value="California">California</option>
+            <option value="New York">New York</option>
+            <option value="Albany">Albany</option>
+            <option value="Atlanta">Atlanta</option>
+            <option value="BaltimoreWashington">Baltimore Washington</option>
+            <option value="Boise">Boise</option>
+            <option value="Boston">Boston</option>
+            <option value="BuffaloRochester">Buffalo Rochester</option>
+            <option value="Charlotte">Charlotte</option>
+            <option value="Chicago">Chicago</option>
+            <option value="CincinnatiDayton">Cincinnati Dayton</option>
+            <option value="Columbus">Columbus</option>
+            <option value="DallasFtWorth">DallasFt Worth</option>
+            <option value="Denver">Denver</option>
+            <option value="Detroit">Detroit</option>
+            <option value="GrandRapids">Grand Rapids</option>
+            <option value="GreatLakes">Great Lakes</option>
+            <option value="HarrisburgScranton">Harrisburg Scranton</option>
+            <option value="HartfordSpringfield">Hartford Springfield</option>
+            <option value="Houston">Houston</option>
+            <option value="Indianapolis">Indianapolis</option>
+            <option value="Jacksonville">Jacksonville</option>
+            <option value="LasVegas">Las Vegas</option>
+            <option value="LosAngeles">Los Angeles</option>
+            <option value="Louisville">Louisville</option>
+            <option value="MiamiFtLauderdale">MiamiFt Lauderdale</option>
+            <option value="Midsouth">Midsouth</option>
+            <option value="Nashville">Nashville</option>
+            <option value="NewOrleansMobile">New Orleans Mobile</option>
+            <option value="Northeast">Northeast</option>
+            <option value="NorthernNewEngland">Northern NewEngland</option>
+            <option value="Orlando">Orlando</option>
+            <option value="Philadelphia">Philadelphia</option>
+            <option value="PhoenixTucson">PhoenixTucson</option>
+            <option value="Pittsburgh">Pittsburgh</option>
+            <option value="Plains">Plains</option>
+            <option value="Portland">Portland</option>
+            <option value="RaleighGreensboro">Raleigh Greensboro</option>
+            <option value="RichmondNorfolk">Richmond Norfolk</option>
+            <option value="Roanoke">Roanoke</option>
+            <option value="Sacramento">Sacramento</option>
+            <option value="SanDiego">San Diego</option>
+            <option value="SanFrancisco">San Francisco</option>
+            <option value="Seattle">Seattle</option>
+            <option value="SouthCarolina">South Carolina</option>
+            <option value="SouthCentral">South Central</option>
+            <option value="Southeast">Southeast</option>
+            <option value="Spokane">Spokane</option>
+            <option value="StLouis">StLouis</option>
+            <option value="Syracuse">Syracuse</option>
+            <option value="Tampa">Tampa</option>
+            <option value="TotalUS">Total US</option>
+            <option value="West">West</option>
+            <option value="WestTexNewMexico">West Tex New Mexico</option>
+          </select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="total_volume" class="form-label">Total Volume</label>
+          <input
+            type="number"
+            class="form-control"
+            name="total_volume"
+            id="total_volume"
+            placeholder="Enter total volume"
+            required
+            min="0"
+            step="any"
+            aria-label="Enter total avocado volume in units"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="total_bags" class="form-label">Total Bags</label>
+          <input
+            type="number"
+            class="form-control"
+            name="total_bags"
+            id="total_bags"
+            placeholder="Enter total bags"
+            required
+            min="0"
+            step="any"
+            aria-label="Enter total number of bags"
+          />
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="small_bags" class="form-label">Small Bags</label>
+          <input
+            type="number"
+            class="form-control"
+            name="small_bags"
+            id="small_bags"
+            placeholder="Enter small bags"
+            required
+            min="0"
+            step="any"
+            aria-label="Enter number of small bags"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="large_bags" class="form-label">Large Bags</label>
+          <input
+            type="number"
+            class="form-control"
+            name="large_bags"
+            id="large_bags"
+            placeholder="Enter large bags"
+            required
+            min="0"
+            step="any"
+            aria-label="Enter number of large bags"
+          />
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="xlarge_bags" class="form-label">XLarge Bags</label>
+          <input
+            type="number"
+            class="form-control"
+            name="xlarge_bags"
+            id="xlarge_bags"
+            placeholder="Enter XLarge bags"
+            required
+            min="0"
+            step="any"
+            aria-label="Enter number of extra-large bags"
+          />
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Predict Price</button>
+      {% if prediction_text %}
+      <div class="note">{{ prediction_text }}</div>
+      {% else %}
+      <div class="note">Enter details to predict the avocado price</div>
+      {% endif %}
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
