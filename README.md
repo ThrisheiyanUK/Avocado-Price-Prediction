@@ -29,3 +29,6 @@ Avocado Price Prediction
 
 **Summary:**  
 You enter avocado sales details in a web form, the backend processes your input and uses a trained machine learning model to predict and display the expected average price for your chosen region and date.
+
+## Co-authored-by
+Sai Srinivasan - [@Sai-Srinivasan05](https://github.com/Sai-Srinivasan05)
