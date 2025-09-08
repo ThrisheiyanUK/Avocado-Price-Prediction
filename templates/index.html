@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🥑 Avocado Price Predictor | Smart ML Analytics</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!-- Anime.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="Predict avocado prices using advanced machine learning algorithms with real-time data analysis.">
+    <meta name="keywords" content="avocado, price prediction, machine learning, analytics">
+    <meta property="og:title" content="Avocado Price Predictor">
+    <meta property="og:description" content="Smart ML-powered avocado price predictions">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🥑</text></svg>">
+</head>
+<body>
+    <!-- Interactive Gradient Background -->
+    <div class="interactive-gradient"></div>
+    
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <h1>🥑 Avocado Price Predictor</h1>
+            <p>Smart ML-Powered Price Analytics & Forecasting</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Prediction Form -->
+        <section class="prediction-form fade-in">
+            <form method="POST" action="/predict" id="predictionForm">
+                <!-- Date and Region Row -->
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="date" class="form-label">📅 Date</label>
+                        <input type="date" class="form-control" name="date" id="date" required>
+                    </div>
+                    <div class="col form-group">
+                        <label for="region" class="form-label">📍 Region</label>
+                        <select class="form-select" name="region" id="region" required>
+                            <option value="" disabled selected>Select your region</option>
+                            <option value="California">California</option>
+                            <option value="New York">New York</option>
+                            <option value="Albany">Albany</option>
+                            <option value="Atlanta">Atlanta</option>
+                            <option value="BaltimoreWashington">Baltimore Washington</option>
+                            <option value="Boise">Boise</option>
+                            <option value="Boston">Boston</option>
+                            <option value="BuffaloRochester">Buffalo Rochester</option>
+                            <option value="Charlotte">Charlotte</option>
+                            <option value="Chicago">Chicago</option>
+                            <option value="CincinnatiDayton">Cincinnati Dayton</option>
+                            <option value="Columbus">Columbus</option>
+                            <option value="DallasFtWorth">Dallas Ft Worth</option>
+                            <option value="Denver">Denver</option>
+                            <option value="Detroit">Detroit</option>
+                            <option value="GrandRapids">Grand Rapids</option>
+                            <option value="GreatLakes">Great Lakes</option>
+                            <option value="HarrisburgScranton">Harrisburg Scranton</option>
+                            <option value="HartfordSpringfield">Hartford Springfield</option>
+                            <option value="Houston">Houston</option>
+                            <option value="Indianapolis">Indianapolis</option>
+                            <option value="Jacksonville">Jacksonville</option>
+                            <option value="LasVegas">Las Vegas</option>
+                            <option value="LosAngeles">Los Angeles</option>
+                            <option value="Louisville">Louisville</option>
+                            <option value="MiamiFtLauderdale">Miami Ft Lauderdale</option>
+                            <option value="Midsouth">Midsouth</option>
+                            <option value="Nashville">Nashville</option>
+                            <option value="NewOrleansMobile">New Orleans Mobile</option>
+                            <option value="Northeast">Northeast</option>
+                            <option value="NorthernNewEngland">Northern New England</option>
+                            <option value="Orlando">Orlando</option>
+                            <option value="Philadelphia">Philadelphia</option>
+                            <option value="PhoenixTucson">Phoenix Tucson</option>
+                            <option value="Pittsburgh">Pittsburgh</option>
+                            <option value="Plains">Plains</option>
+                            <option value="Portland">Portland</option>
+                            <option value="RaleighGreensboro">Raleigh Greensboro</option>
+                            <option value="RichmondNorfolk">Richmond Norfolk</option>
+                            <option value="Roanoke">Roanoke</option>
+                            <option value="Sacramento">Sacramento</option>
+                            <option value="SanDiego">San Diego</option>
+                            <option value="SanFrancisco">San Francisco</option>
+                            <option value="Seattle">Seattle</option>
+                            <option value="SouthCarolina">South Carolina</option>
+                            <option value="SouthCentral">South Central</option>
+                            <option value="Southeast">Southeast</option>
+                            <option value="Spokane">Spokane</option>
+                            <option value="StLouis">St Louis</option>
+                            <option value="Syracuse">Syracuse</option>
+                            <option value="Tampa">Tampa</option>
+                            <option value="TotalUS">Total US</option>
+                            <option value="West">West</option>
+                            <option value="WestTexNewMexico">West Texas New Mexico</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Volume and Bags Row -->
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="total_volume" class="form-label">📊 Total Volume</label>
+                        <input type="number" class="form-control" name="total_volume" id="total_volume" 
+                               placeholder="e.g., 50000" required min="0" step="any">
+                    </div>
+                    <div class="col form-group">
+                        <label for="total_bags" class="form-label">🛍️ Total Bags</label>
+                        <input type="number" class="form-control" name="total_bags" id="total_bags" 
+                               placeholder="e.g., 25000" required min="0" step="any">
+                    </div>
+                </div>
+
+                <!-- Bag Sizes Row -->
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="small_bags" class="form-label">📦 Small Bags</label>
+                        <input type="number" class="form-control" name="small_bags" id="small_bags" 
+                               placeholder="e.g., 20000" required min="0" step="any">
+                    </div>
+                    <div class="col form-group">
+                        <label for="large_bags" class="form-label">📦 Large Bags</label>
+                        <input type="number" class="form-control" name="large_bags" id="large_bags" 
+                               placeholder="e.g., 4000" required min="0" step="any">
+                    </div>
+                </div>
+
+                <!-- XLarge Bags -->
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="xlarge_bags" class="form-label">📦 XLarge Bags</label>
+                        <input type="number" class="form-control" name="xlarge_bags" id="xlarge_bags" 
+                               placeholder="e.g., 1000" required min="0" step="any">
+                    </div>
+                    <div class="col"></div> <!-- Empty column for spacing -->
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="predict-btn">
+                    <span>🔮 Predict Avocado Price</span>
+                </button>
+
+                <!-- Current Result Display (from Flask) -->
+                {% if prediction_text %}
+                <div class="result-container show {% if 'not recognized' in prediction_text or 'Error' in prediction_text %}result-error{% else %}result-success{% endif %}">
+                    <div class="result-content">
+                        <div class="result-text">{{ prediction_text }}</div>
+                        <div class="result-subtitle">
+                            {% if 'not recognized' in prediction_text or 'Error' in prediction_text %}
+                            Please check your input and try again
+                            {% else %}
+                            Based on your input parameters
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </form>
+        </section>
+
+        <!-- Information Cards -->
+        <section class="info-cards fade-in">
+            <div class="info-card slide-in-left">
+                <h3>🤖 AI-Powered</h3>
+                <p>Advanced Random Forest machine learning algorithm trained on historical avocado price data for accurate predictions.</p>
+            </div>
+            <div class="info-card scale-in">
+                <h3>📈 Real-Time Data</h3>
+                <p>Considers multiple factors including region, season, volume, and market trends to provide precise forecasting.</p>
+            </div>
+            <div class="info-card slide-in-right">
+                <h3>🎯 Accurate Results</h3>
+                <p>Trained on comprehensive datasets to deliver reliable price predictions for informed business decisions.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Interactive Background Script -->
+    <script src="{{ url_for('static', filename='js/interactive-background.js') }}"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
