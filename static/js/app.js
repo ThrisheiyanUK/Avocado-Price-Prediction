@@ -358,7 +358,8 @@ function submitForm() {
         // Parse the response to get the prediction result
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
-        const predictionText = doc.querySelector('.note') ? doc.querySelector('.note').textContent : null;
+        const resultElement = doc.querySelector('.result-text');
+        const predictionText = resultElement ? resultElement.textContent : 'Error occurred while predicting price. Please check your input.';
         
         hideLoadingState();
         showResult(predictionText);

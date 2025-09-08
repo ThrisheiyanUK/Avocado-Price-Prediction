@@ -4,6 +4,8 @@ import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 import joblib
 from datetime import datetime
+import traceback
+import sys
 
 app = Flask(__name__)
 
@@ -20,19 +22,38 @@ def index():
 def predict():
     try:
         if request.method == 'POST':
-            date_str = request.form['date']
-            date = datetime.strptime(date_str, '%Y-%m-%d')
-            year = date.year
-            month = date.month
-            day_of_week = date.weekday() 
+            # Validate and extract date
+            date_str = request.form.get('date', '').strip()
+            if not date_str:
+                return render_template('index.html', prediction_text="Error: Please select a date.")
+            
+            try:
+                date = datetime.strptime(date_str, '%Y-%m-%d')
+                year = date.year
+                month = date.month
+                day_of_week = date.weekday() 
+            except ValueError:
+                return render_template('index.html', prediction_text="Error: Invalid date format. Please use YYYY-MM-DD format.")
 
-            total_volume = float(request.form['total_volume'])
-            total_bags = float(request.form['total_bags'])
-            small_bags = float(request.form['small_bags'])
-            large_bags = float(request.form['large_bags'])
-            xlarge_bags = float(request.form['xlarge_bags'])
+            # Validate numerical inputs
+            try:
+                total_volume = float(request.form.get('total_volume', 0))
+                total_bags = float(request.form.get('total_bags', 0))
+                small_bags = float(request.form.get('small_bags', 0))
+                large_bags = float(request.form.get('large_bags', 0))
+                xlarge_bags = float(request.form.get('xlarge_bags', 0))
+                
+                # Check for negative values
+                if any(val < 0 for val in [total_volume, total_bags, small_bags, large_bags, xlarge_bags]):
+                    return render_template('index.html', prediction_text="Error: Volume and bag counts cannot be negative.")
+                    
+            except (ValueError, TypeError):
+                return render_template('index.html', prediction_text="Error: Please enter valid numbers for all volume and bag fields.")
 
-            region = request.form['region'].strip()
+            # Validate region
+            region = request.form.get('region', '').strip()
+            if not region:
+                return render_template('index.html', prediction_text="Error: Please select a region.")
             region_mapping = {
                 'California': 0,
                 'New York': 1,
@@ -91,10 +112,7 @@ def predict():
             }
 
             if region not in region_mapping:
-                error_message = "Region not recognized."
-                # Check if it's an AJAX request
-                if request.headers.get('Content-Type') == 'application/x-www-form-urlencoded':
-                    return render_template('index.html', prediction_text=error_message)
+                error_message = f"Error: Region '{region}' not recognized. Please select a valid region from the dropdown."
                 return render_template('index.html', prediction_text=error_message)
 
             region_encoded = region_mapping[region]
